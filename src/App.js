@@ -1,3 +1,6 @@
+
+import './scss/AppStyles.scss';
+import {Navbar, NavDropdown, Nav} from './react-bootstrap';
 import 'regenerator-runtime/runtime'
 import React from 'react'
 import { login, logout } from './utils'
