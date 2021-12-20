@@ -4,7 +4,7 @@ export async function getNearConnection(config) {
   return await connect(Object.assign({ deps: { keyStore: new keyStores.BrowserLocalStorageKeyStore() } }, config));
 }
 
-export default class MyNearConfig {
+export class Configurator {
   constructor(nearConfig) {
     this.nearConfig = nearConfig;
     this.walletConnection = new WalletConnection(nearConfig);
@@ -25,3 +25,5 @@ export default class MyNearConfig {
     });
   }
 }
+
+module.exports = {Configurator,getNearConnection};

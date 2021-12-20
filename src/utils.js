@@ -1,19 +1,21 @@
-import { connect, Contract, keyStores, WalletConnection } from 'near-api-js'
+import { connect, Contract, keyStores, WalletConnection, Account } from 'near-api-js'
 import getConfig from './config'
-//import { NearConfigurator, getNearConnection} from './NearConfigurator';
 
-const config = getConfig(process.env.NODE_ENV || 'development');
-const nearConnection = getNearConnection(config);
-const near = new NearConfigurator(nearConnection);
+const nearConfig = getConfig(process.env.NODE_ENV || 'development')
 
 export async function initContract() {
-  window.walletConnection = near.getWalletConnection();
-  window.accountId = near.getAccountId();
-  window.contract = near.getContract();
+  const near = await connect(Object.assign({ deps: { keyStore: new keyStores.BrowserLocalStorageKeyStore() } }, nearConfig))
+  window.walletConnection = new WalletConnection(near)
+  window.accountId = window.walletConnection.getAccountId()
+  window.account = new Account(near.connection, accountId);
+  window.contract = await new Contract(window.walletConnection.account(), nearConfig.contractName, {
+    viewMethods: [],
+    changeMethods: [],
+  })
 }
 
 export function logout() {
-  near.getWalletConnection().signOut();
+  window.walletConnection.signOut()
   window.location.replace(window.location.origin + window.location.pathname)
 }
 
