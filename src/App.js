@@ -18,9 +18,18 @@ export default function App() {
         <Nav className="me-auto">
         </Nav>
         <Nav>
-          <Nav.Link>
-            Login
-          </Nav.Link>
+          
+        <Nav.Link onClick={
+            (window.accountId==='') ?
+            login :
+            logout
+        }>
+        {
+            (window.accountId==='')?
+            'Login' :
+            'Logout'
+        }
+        </Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
