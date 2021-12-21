@@ -6,7 +6,6 @@ const nearConfig = getConfig(process.env.NODE_ENV || 'development')
 const configurator = getNearConfigurator(nearConfig);
 
 export async function initContract() {
-  const near = await configurator.getNearConnection();
   window.walletConnection = await configurator.getWalletConnection()
   window.accountId = await configurator.getAccountId();
   window.account = await configurator.getAccount();
