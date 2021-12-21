@@ -28,6 +28,9 @@
    * `yarn dev`
 
 
+[<img src="./quickstart.gif">](./quickstart.gif)
+
+
 
 ## Application Architecture
 
