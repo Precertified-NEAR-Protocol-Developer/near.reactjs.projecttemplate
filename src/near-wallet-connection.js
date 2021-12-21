@@ -4,8 +4,10 @@ export function initConnection(config) {
     const near = connect(Object.assign({ deps: { keyStore: new keyStores.BrowserLocalStorageKeyStore() } }, config))
     return near;
 }
-
-export class NearConfigurator {
+/**
+ * Class used to couple a `Near` object and `WalletConnection`
+ */
+export class NearWalletConnection {
   constructor(nearConfig) {
     this.account = null;
     this.walletConnection = null;
@@ -48,5 +50,5 @@ export class NearConfigurator {
 }
 
 export default function getNearConfigurator(nearConfig) {
-    return new NearConfigurator(nearConfig);
+    return new NearWalletConnection(nearConfig);
 }

@@ -1,8 +1,8 @@
 import getConfig from './config'
-import getNearConfigurator from './near-configurator'
+import getNearWalletConnection from './near-wallet-connection'
 
 const nearConfig = getConfig(process.env.NODE_ENV || 'development')
-const configurator = getNearConfigurator(nearConfig);
+const configurator = getNearWalletConnection(nearConfig);
 
 export async function initContract() {
   window.walletConnection = await configurator.getWalletConnection();
