@@ -1,4 +1,4 @@
-const CONTRACT_NAME = process.env.CONTRACT_NAME ||'near.react.my-first-fullstack'
+const CONTRACT_NAME = process.env.CONTRACT_NAME ||'near.react.my-first-fullstack.git-leon.testnet'
 
 function getConfig(env) {
   switch (env) {
