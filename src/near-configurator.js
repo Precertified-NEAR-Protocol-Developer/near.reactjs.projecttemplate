@@ -28,9 +28,9 @@ export class NearConfigurator {
     return this.walletConnection;
   }
 
-  getAccount() {
+  async getAccount() {
     if(this.account === null) {
-        this.account = new Account(this.nearConnection, accountId);
+        this.account = new Account(await this.getNearConnection(), accountId);
     }
     return this.account;
   }
