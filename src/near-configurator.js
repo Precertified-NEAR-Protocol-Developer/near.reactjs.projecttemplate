@@ -1,5 +1,10 @@
 import { connect, Contract, keyStores, WalletConnection } from 'near-api-js';
 
+export function initConnection(config) {
+    const near = connect(Object.assign({ deps: { keyStore: new keyStores.BrowserLocalStorageKeyStore() } }, config))
+    return near;
+}
+
 export class NearConfigurator {
   constructor(nearConfig) {
     this.account = null;
@@ -10,11 +15,7 @@ export class NearConfigurator {
 
    getNearConnection() {
         if(this.nearConnection === null) {
-            const config = this.nearConfig;
-            async function get() {
-                return await connect(Object.assign({ deps: { keyStore: new keyStores.BrowserLocalStorageKeyStore() } }, config))
-            }
-            this.nearConnection = get();
+            this.nearConnection = initConnection(this.nearConfig);
         }
         return this.nearConnection;
     }

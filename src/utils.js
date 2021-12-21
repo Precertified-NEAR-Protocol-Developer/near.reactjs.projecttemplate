@@ -6,12 +6,11 @@ const nearConfig = getConfig(process.env.NODE_ENV || 'development')
 const configurator = getNearConfigurator(nearConfig);
 
 export async function initContract() {
-  const nearC = configurator.getNearConnection();
-  const near = await connect(Object.assign({ deps: { keyStore: new keyStores.BrowserLocalStorageKeyStore() } }, nearConfig))
+  const near = await configurator.getNearConnection();
   window.walletConnection = new WalletConnection(near)
   window.accountId = window.walletConnection.getAccountId()
   window.account = new Account(near.connection, accountId);
-  window.contract = await new Contract(window.walletConnection.account(), nearConfig.contractName, {
+  window.contract = new Contract(window.walletConnection.account(), nearConfig.contractName, {
     viewMethods: [],
     changeMethods: [],
   })
