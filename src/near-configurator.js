@@ -1,4 +1,4 @@
-import { connect, Contract, keyStores, WalletConnection } from 'near-api-js';
+import { connect, Contract, keyStores, WalletConnection, Account } from 'near-api-js';
 
 export function initConnection(config) {
     const near = connect(Object.assign({ deps: { keyStore: new keyStores.BrowserLocalStorageKeyStore() } }, config))
@@ -13,17 +13,17 @@ export class NearConfigurator {
     this.nearConfig = nearConfig;
   }
 
-   getNearConnection() {
+   async getNearConnection() {
         if(this.nearConnection === null) {
-            this.nearConnection = initConnection(this.nearConfig);
+            this.nearConnection = await initConnection(this.nearConfig);
         }
         return this.nearConnection;
     }
   
 
-  getWalletConnection() {
+  async getWalletConnection() {
     if(this.walletConnection === null) {
-        this.walletConnection = new WalletConnection(this.getNearConnection());
+        this.walletConnection = new WalletConnection(await this.getNearConnection());
     }
     return this.walletConnection;
   }
@@ -35,12 +35,12 @@ export class NearConfigurator {
     return this.account;
   }
 
-  getAccountId() {
-    return this.getWalletConnection().getAccountId();
+  async getAccountId() {
+    return (await this.getWalletConnection()).getAccountId();
   }
 
   async getContract() {
-    return await new Contract(this.getWalletConnection().account(), this.nearConfig.contractName, {
+    return await new Contract((await this.getWalletConnection()).account(), this.nearConfig.contractName, {
         viewMethods: [],
         changeMethods: [],
     });
